@@ -64,4 +64,40 @@ describe 'Payment' do
       doing { @payment.foobar = '1245' }.should raise_error(NoMethodError)
     end
   end
+
+  describe "#delivery_date" do
+    it 'does not change strings' do
+      @payment.delivery_date = 'foo'
+      @payment.delivery_date.should == 'foo'
+    end
+
+    it 'formats time objects to YYYYMMDD' do
+      @payment.delivery_date = Time.local(2010, 2, 1)
+      @payment.delivery_date.should == '20100201'
+    end
+
+    it 'formats time objects when set via the constructor' do
+      @payment = Checkoutfi::Payment.new(:delivery_date => Time.local(2010, 2, 1))
+      @payment.delivery_date.should == '20100201'
+    end
+  end
+
+  describe "#mac" do
+    it 'raises an error if a required field is missing' do
+      doing { @payment.mac }.should raise_error(ArgumentError)
+    end
+
+    it 'returns the checksum of the options' do
+      Checkoutfi.merchant_id = 12345
+      Checkoutfi.password = 'foobar'
+      @payment = Checkoutfi::Payment.new( :stamp => '1234', :amount => 1000, :reference => "1009",
+                                          :message => 'Foo bar.', :language => 'FI', :return => 'return',
+                                          :cancel => 'cancel', :reject => 'reject', :delayed => 'delayed',
+                                          :content => 1, :delivery_date => Time.local(2010, 2, 1), :firstname => 'Toni',
+                                          :familyname => 'Tuominen', :address => 'address', :postcode => '1000',
+                                          :postoffice => 'postoffice'
+                                        )
+      @payment.mac.should == 'BC87FC4C91B97841F668B39985773A0D'
+    end
+  end
 end

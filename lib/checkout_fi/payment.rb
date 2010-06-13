@@ -1,3 +1,5 @@
+require 'digest/md5'
+
 module Checkoutfi
   class Payment
     Normal = 1
@@ -7,6 +9,15 @@ module Checkoutfi
                         delivery_date firstname familyname address
                         postcode postoffice password
                       ].map { |m| m.to_sym }.freeze
+
+    REQUIRED_OPTIONS = %w[  version stamp amount reference merchant return cancel
+                            currency device content type algorithm delivery_date
+                         ].map { |m| m.to_sym }.freeze
+
+    OPTION_ORDER = %w[  version stamp amount reference message language merchant return
+                        cancel reject delayed country currency device content type algorithm
+                        delivery_date firstname familyname address postcode postoffice password
+                     ].map { |m| m.to_sym }.freeze
 
     DEFAULT_OPTIONS = {
                         :version => '0001',
@@ -26,6 +37,9 @@ module Checkoutfi
 
       @options = DEFAULT_OPTIONS.merge(:merchant => Checkoutfi.merchant_id,
                                        :password => Checkoutfi.password).merge(opts)
+      @options.each do |key, value|
+        send(:"#{key}=", value) if respond_to?(:"#{key}=")
+      end
     end
 
     def version
@@ -50,6 +64,22 @@ module Checkoutfi
 
     def algorithm
       options[:algorithm]
+    end
+
+    def mac
+      if REQUIRED_OPTIONS.any? { |opt| options[opt].nil? }
+        raise ArgumentError.new("You must set the following options: #{REQUIRED_OPTIONS.join(',')}")
+      end
+
+      values = OPTION_ORDER.map { |k| options[k].to_s.strip }
+      Digest::MD5.hexdigest(values.join('+')).upcase
+    end
+
+    def delivery_date=(value)
+      if value.respond_to?(:strftime)
+        value = value.strftime('%Y%m%d')
+      end
+      options[:delivery_date] = value
     end
 
     private
