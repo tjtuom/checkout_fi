@@ -1,6 +1,8 @@
 module Checkoutfi
   autoload :Version, 'checkout_fi/version'
 
+  autoload :Payment, 'checkout_fi/payment'
+
   class << self
     attr_writer :merchant_id, :password
 

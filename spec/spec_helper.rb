@@ -11,5 +11,10 @@ Spec::Runner.configure do |config|
   # config.mock_with :mocha
   # config.mock_with :flexmock
   # config.mock_with :rr
+
+  # a simple helper for readability
+  def doing(&block)
+    block
+  end
 end
 
