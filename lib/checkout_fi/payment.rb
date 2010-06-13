@@ -1,13 +1,21 @@
 module Checkoutfi
   class Payment
+    Normal = 1
+
     VALID_OPTIONS = %w[ stamp amount reference message language merchant
-                        return cancel reject delayed country currency devise content
-                        type algorithm delivery_date firstname familyname address
+                        return cancel reject delayed content
+                        delivery_date firstname familyname address
                         postcode postoffice password
                       ].map { |m| m.to_sym }.freeze
 
     DEFAULT_OPTIONS = {
-                        :version => '0001'
+                        :version => '0001',
+                        :country => 'FIN',
+                        :currency => 'EUR',
+                        :device => 1,
+                        :content => Normal,
+                        :type => 0,
+                        :algorithm => 1
                       }
 
     def initialize(opts = {})
@@ -21,6 +29,26 @@ module Checkoutfi
 
     def version
       options[:version]
+    end
+
+    def country
+      options[:country]
+    end
+
+    def currency
+      options[:currency]
+    end
+
+    def device
+      options[:device]
+    end
+
+    def type
+      options[:type]
+    end
+
+    def algorithm
+      options[:algorithm]
     end
 
     private

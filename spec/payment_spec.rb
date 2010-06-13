@@ -10,17 +10,27 @@ describe 'Payment' do
     @payment = Checkoutfi::Payment.new
   end
 
-  describe "#version" do
-    it 'defaults to 0001' do
-      @payment.version.should == '0001'
-    end
+  { :version => '0001', :country => 'FIN', :currency => 'EUR', :device => 1,
+    :type => 0, :algorithm => 1 }.each do |key, default|
+    describe "##{key.to_s}" do
+      it "defaults to #{default}" do
+        @payment.send(key).should == default
+      end
 
-    it 'cannot be set' do
-      doing { @payment.version = 'foo' }.should raise_error(NoMethodError)
-    end
+      it 'cannot be set' do
+        doing { @payment.send(:"#{key.to_s}=", 'foo') }.should raise_error(NoMethodError)
+      end
 
-    it 'cannot be set by the constructor' do
-      doing { Checkoutfi::Payment.new(:version => '1000') }.should raise_error(ArgumentError)
+      it 'cannot be set by the constructor' do
+        doing { Checkoutfi::Payment.new(key => '1000') }.should raise_error(ArgumentError)
+      end
+    end
+  end
+
+  describe "#content" do
+    it 'defaults to normal content' do
+      @payment.content.should == Checkoutfi::Payment::Normal
+      @payment.content.should == 1
     end
   end
 
