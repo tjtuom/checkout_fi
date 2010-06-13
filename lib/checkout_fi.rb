@@ -4,14 +4,14 @@ module Checkoutfi
   autoload :Payment, 'checkout_fi/payment'
 
   class << self
-    attr_writer :merchant_id, :password
+    attr_accessor :merchant_id, :password
 
-    def merchant_id
-      @merchant_id || 375917
+    def test_merchant_id
+      375917
     end
 
-    def password
-      @password || 'SAIPPUAKAUPPIAS'
+    def test_password
+      'SAIPPUAKAUPPIAS'
     end
   end
 end
