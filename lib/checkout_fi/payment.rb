@@ -3,6 +3,7 @@ require 'digest/md5'
 module Checkoutfi
   class Payment
     Normal = 1
+    Adult = 2
 
     VALID_OPTIONS = %w[ stamp amount reference message language merchant
                         return cancel reject delayed content
@@ -27,7 +28,7 @@ module Checkoutfi
                         :content => Normal,
                         :type => 0,
                         :algorithm => 1
-                      }
+                      }.freeze
 
     def initialize(opts = {})
       invalid_keys = opts.keys - VALID_OPTIONS
