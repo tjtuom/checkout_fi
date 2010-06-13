@@ -34,6 +34,20 @@ describe 'Payment' do
     end
   end
 
+  describe "#merchant" do
+    it 'defaults to the merchant_id set for the module' do
+      Checkoutfi.merchant_id = 12345
+      Checkoutfi::Payment.new.merchant.should == 12345
+    end
+  end
+
+  describe "#password" do
+    it 'defaults to the password set for the module' do
+      Checkoutfi.password = 'foobar'
+      Checkoutfi::Payment.new.password.should == 'foobar'
+    end
+  end
+
   describe "valid options" do
     it 'can be set' do
       doing { @payment.stamp = '12345' }.should_not raise_error(NoMethodError)

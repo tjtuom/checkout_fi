@@ -24,7 +24,8 @@ module Checkoutfi
         raise ArgumentError.new('Invalid keys: #{invalid_keys.join(", ")}')
       end
 
-      @options = DEFAULT_OPTIONS.merge(opts)
+      @options = DEFAULT_OPTIONS.merge(:merchant => Checkoutfi.merchant_id,
+                                       :password => Checkoutfi.password).merge(opts)
     end
 
     def version
