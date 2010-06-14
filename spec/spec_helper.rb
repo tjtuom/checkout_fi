@@ -58,5 +58,17 @@ module Checkoutfi
       end
     end
 
+    def payment_with_all_attributes_set
+      Checkoutfi.merchant_id = 12345
+      Checkoutfi.password = 'foobar'
+      Checkoutfi::Payment.new(  :stamp => '1234', :amount => 1000, :reference => "1009",
+                                :message => 'Foo bar.', :language => 'FI', :return => 'return',
+                                :cancel => 'cancel', :reject => 'reject', :delayed => 'delayed',
+                                :content => 1, :delivery_date => Time.local(2010, 2, 1), :firstname => 'Toni',
+                                :familyname => 'Tuominen', :address => 'address', :postcode => '1000',
+                                :postoffice => 'postoffice'
+                             )
+    end
+
   end
 end

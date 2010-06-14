@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe 'Payment' do
+  include Checkoutfi::SpecHelper
 
   it 'can be instantiated' do
     doing { Checkoutfi::Payment.new }.should_not raise_error
@@ -88,15 +89,7 @@ describe 'Payment' do
     end
 
     it 'returns the checksum of the options' do
-      Checkoutfi.merchant_id = 12345
-      Checkoutfi.password = 'foobar'
-      @payment = Checkoutfi::Payment.new( :stamp => '1234', :amount => 1000, :reference => "1009",
-                                          :message => 'Foo bar.', :language => 'FI', :return => 'return',
-                                          :cancel => 'cancel', :reject => 'reject', :delayed => 'delayed',
-                                          :content => 1, :delivery_date => Time.local(2010, 2, 1), :firstname => 'Toni',
-                                          :familyname => 'Tuominen', :address => 'address', :postcode => '1000',
-                                          :postoffice => 'postoffice'
-                                        )
+      @payment = payment_with_all_attributes_set
       @payment.mac.should == 'BC87FC4C91B97841F668B39985773A0D'
     end
   end
