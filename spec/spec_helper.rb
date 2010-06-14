@@ -10,6 +10,8 @@ require 'action_pack'
 require 'action_view'
 require 'action_controller'
 
+require 'rspec_tag_matchers'
+
 Spec::Runner.configure do |config|
   # == Mock Framework
   #
@@ -19,6 +21,8 @@ Spec::Runner.configure do |config|
   # config.mock_with :mocha
   # config.mock_with :flexmock
   # config.mock_with :rr
+
+  config.include(RspecTagMatchers)
 
   # a simple helper for readability
   def doing(&block)

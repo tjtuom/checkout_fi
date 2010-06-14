@@ -15,6 +15,13 @@ describe "FormHelper" do
         builder.class.should == ::Checkoutfi::PaymentFormBuilder
       end
     end
+
+    it 'sets the :url to https://payment.checkout.fi' do
+      payment_form_for(::Checkoutfi::Payment.new) do |builder|
+
+      end
+      output_buffer.should have_tag("form[@action='https://payment.checkout.fi']")
+    end
   end
 
 end
