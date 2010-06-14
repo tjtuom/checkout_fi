@@ -11,6 +11,10 @@ describe 'Payment' do
     @payment = Checkoutfi::Payment.new
   end
 
+  it 'has a method id that returns -1 for rails form helper compatibility' do
+    @payment.id.should == -1
+  end
+
   { :version => '0001', :country => 'FIN', :currency => 'EUR', :device => 1,
     :type => 0, :algorithm => 1 }.each do |key, default|
     describe "##{key.to_s}" do

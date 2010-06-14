@@ -43,6 +43,11 @@ module Checkoutfi
       end
     end
 
+    # rails form helper compatibility
+    def id
+      -1
+    end
+
     def version
       options[:version]
     end
