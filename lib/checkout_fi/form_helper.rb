@@ -6,6 +6,8 @@ module Checkoutfi
       options[:builder] ||= PaymentFormBuilder
       options[:url] ||= "https://payment.checkout.fi"
       options[:html][:method] ||= "post"
+      options[:html][:class] ||= 'checkoutfi_payment'
+      options[:html][:id] ||= nil
 
       form_for(payment_object, *(args << options), &block)
     end

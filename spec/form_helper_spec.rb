@@ -10,6 +10,10 @@ describe "FormHelper" do
   end
 
   describe "#payment_form_for" do
+    before do
+      payment_form_for(::Checkoutfi::Payment.new) do |builder|
+      end
+    end
     it 'yields an instance of PaymentFormBuilder' do
       payment_form_for(::Checkoutfi::Payment.new) do |builder|
         builder.class.should == ::Checkoutfi::PaymentFormBuilder
@@ -17,17 +21,20 @@ describe "FormHelper" do
     end
 
     it 'sets the :url to https://payment.checkout.fi' do
-      payment_form_for(::Checkoutfi::Payment.new) do |builder|
-
-      end
       output_buffer.should have_tag("form[@action='https://payment.checkout.fi']")
     end
 
     it 'sets the :method to post' do
-      payment_form_for(::Checkoutfi::Payment.new) do |builder|
-      end
       output_buffer.should have_tag("form[@method='post']")
       output_buffer.should_not have_tag("form input[@name='_method']")
+    end
+
+    it 'sets the form class to "checkoutfi_payment"' do
+      output_buffer.should have_tag("form[@class='checkoutfi_payment']")
+    end
+
+    it 'does not set the id' do
+      output_buffer.should_not have_tag('form[@id]')
     end
   end
 
