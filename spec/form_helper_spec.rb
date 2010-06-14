@@ -22,6 +22,13 @@ describe "FormHelper" do
       end
       output_buffer.should have_tag("form[@action='https://payment.checkout.fi']")
     end
+
+    it 'sets the :method to post' do
+      payment_form_for(::Checkoutfi::Payment.new) do |builder|
+      end
+      output_buffer.should have_tag("form[@method='post']")
+      output_buffer.should_not have_tag("form input[@name='_method']")
+    end
   end
 
 end
