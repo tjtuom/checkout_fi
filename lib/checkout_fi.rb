@@ -2,6 +2,7 @@ module Checkoutfi
   autoload :Version, 'checkout_fi/version'
 
   autoload :Payment, 'checkout_fi/payment'
+  autoload :PaymentFormBuilder, 'checkout_fi/payment_form_builder'
 
   class << self
     attr_accessor :merchant_id, :password
