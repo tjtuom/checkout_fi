@@ -7,7 +7,8 @@ module Checkoutfi
 
     def initialize(opts = {})
       opts.each do |key, value|
-        send "#{key.to_s.downcase}=".to_sym, value
+        key = "#{key.to_s.downcase}=".to_sym
+        send key, value if respond_to?(key)
       end
     end
 

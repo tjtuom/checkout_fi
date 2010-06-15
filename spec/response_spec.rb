@@ -23,6 +23,12 @@ describe "Response" do
     end
   end
 
+  describe "invalid options" do
+    it 'ignores invalid options in the constructor opts' do
+      doing { Checkoutfi::Response.new('FOO' => 'bar') }.should_not raise_error
+    end
+  end
+
   it 'calculates a mac from the given params' do
     @response = response_with_all_attributes_set
     @response.calculated_mac.should == '594c1af45840f4e58ab4be9e562d2636'
