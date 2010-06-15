@@ -70,5 +70,12 @@ module Checkoutfi
                              )
     end
 
+    def response_with_all_attributes_set
+      Checkoutfi.password = 'foobar'
+      Checkoutfi::Response.new( :version => '0001', :stamp => '1234', :reference => '1009',
+                                :payment => '123456', :status => '2', :algorithm => 1,
+                                :mac => '594c1af45840f4e58ab4be9e562d2636')
+    end
+
   end
 end
