@@ -12,9 +12,10 @@ describe "PaymentFormBuilder" do
   describe "#payment_fields" do
     before do
       @payment = payment_with_all_attributes_set
-      payment_form_for(@payment) do |builder|
+      form = payment_form_for(@payment) do |builder|
         concat(builder.payment_fields)
       end
+      @output_buffer.concat(form)
     end
 
     it 'creates hidden inputs for every set property' do
@@ -25,9 +26,10 @@ describe "PaymentFormBuilder" do
     it 'does not create inputs for unspecified properties' do
       @payment.message = nil
       @output_buffer = ''
-      payment_form_for(@payment) do |builder|
+      form = payment_form_for(@payment) do |builder|
         concat(builder.payment_fields)
       end
+      @output_buffer.concat(form)
       output_buffer.should_not have_tag("form input[@name='MESSAGE']")
     end
 

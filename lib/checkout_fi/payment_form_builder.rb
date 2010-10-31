@@ -8,7 +8,7 @@ module Checkoutfi
       fields.map do |key|
         value = object.send(key)
         hidden_field_tag(key.to_s.upcase, value, :id => nil) if value
-      end.join("\n")
+      end.join("\n").html_safe
     end
 
   end

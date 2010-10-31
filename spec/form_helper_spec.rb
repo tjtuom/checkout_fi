@@ -11,8 +11,9 @@ describe "FormHelper" do
 
   describe "#payment_form_for" do
     before do
-      payment_form_for(::Checkoutfi::Payment.new) do |builder|
+      form = payment_form_for(::Checkoutfi::Payment.new) do |builder|
       end
+      @output_buffer.concat(form)
     end
     it 'yields an instance of PaymentFormBuilder' do
       payment_form_for(::Checkoutfi::Payment.new) do |builder|

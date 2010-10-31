@@ -1,7 +1,10 @@
 require 'digest/md5'
+require 'active_model/naming'
 
 module Checkoutfi
   class Payment
+    extend ActiveModel::Naming
+
     Normal = 1
     Adult = 2
 
@@ -46,6 +49,14 @@ module Checkoutfi
     # rails form helper compatibility
     def id
       -1
+    end
+
+    def to_key
+      nil
+    end
+
+    def persisted?
+      false
     end
 
     def version

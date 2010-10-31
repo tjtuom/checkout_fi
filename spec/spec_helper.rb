@@ -3,14 +3,16 @@ require 'rubygems'
 require File.expand_path(
     File.join(File.dirname(__FILE__), %w[.. lib checkout_fi]))
 
-gem 'activesupport', '2.3.5'
-gem 'actionpack', '2.3.5'
 require 'active_support'
 require 'action_pack'
 require 'action_view'
+require 'action_view/base'
 require 'action_controller'
+require 'action_view/template/handlers/erb'
 
 require 'rspec_tag_matchers'
+
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].sort.each {|f| require f}
 
 Spec::Runner.configure do |config|
   # == Mock Framework
@@ -32,19 +34,23 @@ end
 
 module Checkoutfi
   module SpecHelper
+    include ActionPack
+    include ActionView::Context if defined?(ActionView::Context)
+    include ActionController::RecordIdentifier
     include ActionView::Helpers::FormHelper
     include ActionView::Helpers::FormTagHelper
     include ActionView::Helpers::FormOptionsHelper
     include ActionView::Helpers::UrlHelper
     include ActionView::Helpers::TagHelper
     include ActionView::Helpers::TextHelper
-    include ActionView::Helpers::ActiveRecordHelper
-    include ActionView::Helpers::RecordIdentificationHelper
+    include ActionView::Helpers::ActiveRecordHelper if defined?(ActionView::Helpers::ActiveRecordHelper)
+    include ActionView::Helpers::ActiveModelHelper if defined?(ActionView::Helpers::ActiveModelHelper)
     include ActionView::Helpers::DateHelper
     include ActionView::Helpers::CaptureHelper
     include ActionView::Helpers::AssetTagHelper
     include ActiveSupport
-    include ActionController::PolymorphicRoutes
+    include ActionController::PolymorphicRoutes if defined?(ActionController::PolymorphicRoutes)
+
 
     def self.included(base)
       base.class_eval do
