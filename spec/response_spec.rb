@@ -31,7 +31,7 @@ describe "Response" do
 
   it 'calculates a mac from the given params' do
     @response = response_with_all_attributes_set
-    @response.calculated_mac.should == '594c1af45840f4e58ab4be9e562d2636'
+    @response.calculated_mac.should == '594C1AF45840F4E58AB4BE9E562D2636'
   end
 
   describe "#valid?" do

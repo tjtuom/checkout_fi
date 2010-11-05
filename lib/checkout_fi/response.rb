@@ -14,7 +14,7 @@ module Checkoutfi
 
     def calculated_mac
       values = OPTIONS.map { |key| send(key) } << Checkoutfi.password
-      Digest::MD5.hexdigest(values.join('+'))
+      Digest::MD5.hexdigest(values.join('+')).upcase
     end
 
     def valid?

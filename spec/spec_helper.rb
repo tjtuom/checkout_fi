@@ -74,7 +74,7 @@ module Checkoutfi
       Checkoutfi.password = 'foobar'
       Checkoutfi::Response.new( :version => '0001', :stamp => '1234', :reference => '1009',
                                 :payment => '123456', :status => '2', :algorithm => 1,
-                                :mac => '594c1af45840f4e58ab4be9e562d2636')
+                                :mac => '594C1AF45840F4E58AB4BE9E562D2636')
     end
 
   end
