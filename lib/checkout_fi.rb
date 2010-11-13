@@ -5,6 +5,7 @@ module Checkoutfi
   autoload :Response, 'checkout_fi/response'
   autoload :FormHelper, 'checkout_fi/form_helper'
   autoload :PaymentFormBuilder, 'checkout_fi/payment_form_builder'
+  autoload :Test, 'checkout_fi/test'
 
   class << self
     attr_accessor :merchant_id, :password
